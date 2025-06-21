@@ -29,5 +29,3 @@ Cargo.lock
 __pycache__/
 *.py[cod]
 
-# Model output
-models/
