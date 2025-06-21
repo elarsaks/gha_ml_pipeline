@@ -15,6 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Prepare cargo cache dirs
+        run: mkdir -p ~/.cargo/registry ~/.cargo/git
+
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -26,12 +29,16 @@ jobs:
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registry-${{ hashFiles('rust_fetch/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-registry-  # prefix fallback
 
       - name: Cache cargo index
         uses: actions/cache@v3
         with:
           path: ~/.cargo/git
           key: ${{ runner.os }}-cargo-git-${{ hashFiles('rust_fetch/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-git-      # prefix fallback
 
       - name: Build project
         run: cargo build --release
@@ -43,6 +50,4 @@ jobs:
         run: mkdir -p ../data/processed
 
       - name: Convert JSONL → Parquet
-        run: cargo run --release --bin convert_jsonl_parquet -- \
-          ../data/raw/fear_and_greed_history_5min.jsonl \
-          ../data/processed/fear_and_greed_history_5min.parquet
+        run: cargo run --release --bin convert_jsonl_parquet -- ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
