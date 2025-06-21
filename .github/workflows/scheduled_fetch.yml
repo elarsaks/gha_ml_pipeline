@@ -1,16 +1,18 @@
-name: Rust CI
+name: Scheduled Data Fetch
 
 on:
-  push:
+  schedule:
+    - cron: "30 16 * * *" # At 16:30 UTC daily
+  workflow_dispatch: # Manual trigger
 
 jobs:
-  test:
+  fetch:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: rust_fetch
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Rust
@@ -30,8 +32,9 @@ jobs:
         with:
           path: ~/.cargo/git
           key: ${{ runner.os }}-cargo-git-${{ hashFiles('rust_fetch/Cargo.lock') }}
-      - name: Build
-        run: cargo build
 
-      - name: Run tests
-        run: cargo test --verbose
+      - name: Build project
+        run: cargo build --release --verbose
+
+      - name: Run scheduled fetch
+        run: cargo run --release --verbose
