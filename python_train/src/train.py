@@ -3,10 +3,10 @@ from pathlib import Path
 import polars as pl
 from sklearn.linear_model import LinearRegression
 
+repo_root = Path(__file__).resolve().parents[2]
+
 
 def main():
-    # Find repo root (assumes this script is in python_train/src/)
-    repo_root = Path(__file__).resolve().parents[2]
     data_path = repo_root / "data" / "processed" / "fear_and_greed_history_5min.parquet"
     df = pl.read_parquet(data_path).drop_nulls()
 

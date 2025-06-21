@@ -16,3 +16,27 @@ cd python_train
 poetry install
 poetry run python src/train.py
 ```
+
+## Model Training
+
+A Python project using Poetry to train a linear model on the Parquet data.
+
+Steps:
+1. Change into the model directory and install dependencies:
+
+   ```bash
+   cd python_train
+   poetry install
+   ```
+2. Train the model and save weights:
+
+   ```bash
+   poetry run python src/train.py
+   ```
+   The model weights will be saved to the root-level `models/model_v1.csv` file.
+
+3. Run Python tests:
+
+   ```bash
+   poetry run pytest
+   ```
