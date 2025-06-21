@@ -2,14 +2,15 @@
 name = "python_train"
 version = "0.1.0"
 description = "BTC price prediction training"
-authors = ["Your Name <you@example.com>"]
+authors = ["Elar Saks elarsaks@gmailcom"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 polars = "*"
 scikit-learn = "*"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

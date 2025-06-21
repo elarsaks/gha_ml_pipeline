@@ -5,10 +5,10 @@ from sklearn.linear_model import LinearRegression
 
 
 def main():
-    repo_root = Path(__file__).resolve().parents[1]
+    # Find repo root (assumes this script is in python_train/src/)
+    repo_root = Path(__file__).resolve().parents[2]
     data_path = repo_root / "data" / "processed" / "fear_and_greed_history_5min.parquet"
-    df = pl.read_parquet(data_path)
-    df = df.drop_nulls()
+    df = pl.read_parquet(data_path).drop_nulls()
 
     feature_cols = [
         "open_actual_value",
@@ -24,10 +24,12 @@ def main():
     model = LinearRegression()
     model.fit(X, y)
 
-    weights = pl.DataFrame({
-        "feature": ["intercept", *feature_cols],
-        "weight": [model.intercept_, *model.coef_],
-    })
+    weights = pl.DataFrame(
+        {
+            "feature": ["intercept", *feature_cols],
+            "weight": [model.intercept_, *model.coef_],
+        }
+    )
 
     models_dir = repo_root / "models"
     models_dir.mkdir(exist_ok=True)
