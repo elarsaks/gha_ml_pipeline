@@ -1,4 +1,6 @@
 name: Fetch Data
+permissions:
+  contents: write
 on:
   workflow_call: # Called by pipeline.yml
   workflow_dispatch: # Manual trigger
