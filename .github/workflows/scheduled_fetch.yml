@@ -37,7 +37,7 @@ jobs:
         run: cargo build --release
 
       - name: Run scheduled fetch
-        run: cargo run --release --verbose
+        run: cargo run --release --bin gha_ml_pipeline --verbose
 
       - name: Ensure processed folder exists
         run: mkdir -p ../data/processed
