@@ -29,16 +29,12 @@ jobs:
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registry-${{ hashFiles('rust_fetch/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-registry-  # prefix fallback
 
       - name: Cache cargo index
         uses: actions/cache@v3
         with:
           path: ~/.cargo/git
           key: ${{ runner.os }}-cargo-git-${{ hashFiles('rust_fetch/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-git-      # prefix fallback
 
       - name: Build project
         run: cargo build --release
