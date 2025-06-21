@@ -1,4 +1,6 @@
 name: ML Pipeline
+permissions:
+  contents: write
 
 on:
   schedule:
