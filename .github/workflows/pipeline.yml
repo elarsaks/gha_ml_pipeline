@@ -1,0 +1,24 @@
+name: ML Pipeline
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Daily at 00:00 UTC
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  fetch:
+    uses: ./.github/workflows/fetch_data.yml
+
+  train:
+    needs: fetch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Model Training
+        run: 'echo "TODO: add model training steps here"'
+
+  deploy:
+    needs: train
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy React App
+        run: 'echo "TODO: add React deployment steps here"'
