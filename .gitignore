@@ -25,3 +25,7 @@ Cargo.lock
 # Temporary and log files
 *.tmp
 *.log
+# Python artifacts
+__pycache__/
+*.py[cod]
+
