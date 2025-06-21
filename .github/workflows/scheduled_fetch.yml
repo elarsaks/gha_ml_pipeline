@@ -34,7 +34,15 @@ jobs:
           key: ${{ runner.os }}-cargo-git-${{ hashFiles('rust_fetch/Cargo.lock') }}
 
       - name: Build project
-        run: cargo build --release --verbose
+        run: cargo build --release
 
       - name: Run scheduled fetch
         run: cargo run --release --verbose
+
+      - name: Ensure processed folder exists
+        run: mkdir -p ../data/processed
+
+      - name: Convert JSONL → Parquet
+        run: cargo run --release --bin convert_jsonl_parquet -- \
+          ../data/raw/fear_and_greed_history_5min.jsonl \
+          ../data/processed/fear_and_greed_history_5min.parquet

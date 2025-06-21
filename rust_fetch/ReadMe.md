@@ -27,3 +27,16 @@ Run the test suite with:
 ```bash
 cargo test
 ```
+
+## Parquet Conversion
+
+A helper binary `convert_jsonl_parquet` converts your raw JSONL log to a columnar Parquet file:
+
+```bash
+# from the `rust_fetch` folder
+cargo run --release --bin convert_jsonl_parquet -- \
+  ../data/raw/fear_and_greed_history_5min.jsonl \
+  ../data/processed/fear_and_greed_history_5min.parquet
+```
+
+In the scheduled GitHub Action this step runs automatically after each fetch.
