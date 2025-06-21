@@ -2,7 +2,7 @@ name: Scheduled Data Fetch
 
 on:
   schedule:
-    - cron: "15 16 * * *" # At 16:15 UTC daily
+    - cron: "30 16 * * *" # At 16:30 UTC daily
   workflow_dispatch: # Manual trigger
 
 jobs:
