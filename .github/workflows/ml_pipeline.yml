@@ -12,6 +12,7 @@ jobs:
     uses: ./.github/workflows/fetch_data.yml
 
   train:
+    needs: fetch
     uses: ./.github/workflows/train_model.yml
 
   deploy:

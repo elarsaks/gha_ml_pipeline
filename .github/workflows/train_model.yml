@@ -1,4 +1,4 @@
-name: Train and Commit Model
+name: Train Model
 
 permissions:
   contents: write
