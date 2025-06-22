@@ -1,7 +1,9 @@
 use std::collections::HashSet;
 use std::error::Error;
-use std::fs::{create_dir_all, File};
+use std::fs::{create_dir_all, File, OpenOptions};
+use std::io::Write;
 use std::path::Path;
+use serde_json::Value;
 
 use polars::io::json::{JsonFormat, JsonReader};
 use polars::io::parquet::ParquetWriter;
@@ -45,6 +47,35 @@ pub fn convert_jsonl_parquet(input: &str, output_dir: &str) -> Result<(), Box<dy
     Ok(())
 }
 
+/// Appends entries to a JSONL file ensuring no duplicate timestamps are written.
+pub fn append_unique_jsonl(path: &str, entries: &[Value]) -> Result<(), Box<dyn Error>> {
+    let mut seen = HashSet::new();
+
+    if let Ok(contents) = std::fs::read_to_string(path) {
+        for line in contents.lines() {
+            if let Ok(val) = serde_json::from_str::<Value>(line) {
+                if let Some(ts) = val.get("timestamp").and_then(|t| t.as_str()) {
+                    seen.insert(ts.to_string());
+                }
+            }
+        }
+    }
+
+    let mut file = OpenOptions::new().create(true).append(true).open(path)?;
+
+    for entry in entries {
+        if let Some(ts) = entry.get("timestamp").and_then(|t| t.as_str()) {
+            if seen.contains(ts) {
+                continue;
+            }
+            seen.insert(ts.to_string());
+        }
+        writeln!(file, "{}", serde_json::to_string(entry)?)?;
+    }
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -80,5 +111,32 @@ mod tests {
         assert_eq!(df.height(), 1);
         let foo_col = df.column("foo").unwrap().i64().unwrap();
         assert_eq!(foo_col.get(0), Some(42));
+    }
+
+    #[test]
+    fn test_append_unique_jsonl() {
+        let dir = tempdir().unwrap();
+        let file = dir.path().join("hist.jsonl");
+
+        // existing entry
+        {
+            let mut f = File::create(&file).unwrap();
+            writeln!(f, "{}", serde_json::json!({"timestamp": "t1", "v": 1})).unwrap();
+        }
+
+        // new entries with duplicates
+        let entries = vec![
+            serde_json::json!({"timestamp": "t1", "v": 2}),
+            serde_json::json!({"timestamp": "t2", "v": 3}),
+            serde_json::json!({"timestamp": "t2", "v": 4}),
+        ];
+        append_unique_jsonl(file.to_str().unwrap(), &entries).unwrap();
+
+        let contents = std::fs::read_to_string(&file).unwrap();
+        let lines: Vec<_> = contents.lines().collect();
+        assert_eq!(lines.len(), 2); // t1 from existing + t2
+        let vals: Vec<Value> = lines.iter().map(|l| serde_json::from_str(l).unwrap()).collect();
+        assert_eq!(vals[0]["timestamp"], "t1");
+        assert_eq!(vals[1]["timestamp"], "t2");
     }
 }
