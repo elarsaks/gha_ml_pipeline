@@ -1,0 +1,12 @@
+name: btc_predictor
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - polars
+  - scikit-learn
+  - matplotlib
+  - pytest
+  - pip
+  - pip:
+      - ipykernel
