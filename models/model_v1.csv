@@ -1,7 +1,7 @@
 feature,weight
-intercept,85.80653877522855
-open_actual_value,61.23725206572408
-open_bitcoin_price_usd,-0.9232082577678056
-high_bitcoin_price_usd,1.0003323988462487
-low_bitcoin_price_usd,0.9217757229478695
-avg_actual_value,-60.76206598254307
+intercept,122.16097630490549
+open_actual_value,73.99342833735746
+open_bitcoin_price_usd,-0.9208379042831234
+high_bitcoin_price_usd,0.9926793279255626
+low_bitcoin_price_usd,0.9267281801396443
+avg_actual_value,-73.56846158434205
