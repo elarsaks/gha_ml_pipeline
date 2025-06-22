@@ -1,14 +1,10 @@
 name: Train and Commit Model
 
+permissions:
+  contents: write
 on:
-  workflow_dispatch:
-  push:
-    paths:
-      - "python_train/src/train.py"
-      - "python_train/environment.yml"
-      - "python_train/data/**"
-      - "python_train/analysis.ipynb"
-      - ".github/workflows/train_model.yml"
+  workflow_call: # Called by pipeline.yml
+  workflow_dispatch: # Manual trigger
 
 jobs:
   train-and-commit:
