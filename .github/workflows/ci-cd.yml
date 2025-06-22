@@ -1,10 +1,10 @@
-name: Rust & Python CI
+name: CI/CD
 
 on:
   push:
 
 jobs:
-  test:
+  rust-test:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -51,9 +51,12 @@ jobs:
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
-          environment-file: environment.yml
-          activate-environment: python_train
+          environment-file: python_train/environment.yml
+          activate-environment: btc_predictor
           auto-activate-base: false
 
       - name: Run Python tests
-        run: pytest
+        shell: bash -l {0}
+        run: |
+          conda activate btc_predictor
+          pytest
