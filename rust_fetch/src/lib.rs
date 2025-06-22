@@ -47,9 +47,8 @@ pub fn convert_jsonl_parquet(input: &str, output_dir: &str) -> Result<(), Box<dy
     Ok(())
 }
 
-/// Appends entries to a JSONL file ensuring no duplicate timestamps are written.
-/// Appends entries to a JSONL file ensuring no duplicate values are written for the
-/// specified `key`.
+/// Appends entries to a JSONL file ensuring no duplicate values are written for
+/// the specified `key`.
 pub fn append_unique_jsonl_with_key(
     path: &str,
     entries: &[Value],
