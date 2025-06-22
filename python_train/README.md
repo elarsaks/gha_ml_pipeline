@@ -32,3 +32,10 @@ pytest
 ### Run the Notebook
 
 You can open `analysis.ipynb` in VS Code or Jupyter after activating the environment.
+**Make sure to use the `btc_predictor` Conda environment when running the notebook** so all dependencies are available.
+
+If using Jupyter, you may need to install the kernel once:
+```bash
+python -m ipykernel install --user --name btc_predictor --display-name "Python (btc_predictor)"
+```
+Then select the "Python (btc_predictor)" kernel in Jupyter or VS Code.
