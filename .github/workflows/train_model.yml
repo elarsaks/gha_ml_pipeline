@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'python_train/src/train.py'
-      - 'python_train/environment.yml'
-      - 'python_train/data/**'
-      - 'python_train/analysis.ipynb'
-      - '.github/workflows/train_model.yml'
+      - "python_train/src/train.py"
+      - "python_train/environment.yml"
+      - "python_train/data/**"
+      - "python_train/analysis.ipynb"
+      - ".github/workflows/train_model.yml"
 
 jobs:
   train-and-commit:
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Set up Conda environment
         uses: conda-incubator/setup-miniconda@v3
