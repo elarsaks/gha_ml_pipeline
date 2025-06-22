@@ -12,7 +12,7 @@ This Rust App fetches 5-minute interval fear & greed history for the past 24 hou
 Run the fetcher with:
 
 ```bash
-cargo run
+cargo run --bin gha_ml_pipeline
 ```
 
 Each run will:
@@ -20,17 +20,9 @@ Each run will:
 2. Serialize each entry into a compact JSON string.
 3. Append only new timestamps to `data/raw/fear_and_greed_history_5min.jsonl`.
 
-## Testing
-
-Run the test suite with:
-
-```bash
-cargo test
-```
-
 ## Parquet Conversion
 
-A helper binary `convert_jsonl_parquet` converts your raw JSONL log to a columnar Parquet file:
+Convert your raw JSONL log to a columnar Parquet file:
 
 ```bash
 # from the `rust_fetch` folder
