@@ -1,18 +1,3 @@
-[tool.poetry]
-name = "python_train"
-version = "0.1.0"
-description = "BTC price prediction training"
-authors = ["Elar Saks elarsaks@gmail.com"]
-package-mode = false
-
-[tool.poetry.dependencies]
-python = "^3.10"
-polars = "*"
-scikit-learn = "*"
-
-[tool.poetry.group.dev.dependencies]
-pytest = "*"
-
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

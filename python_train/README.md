@@ -4,39 +4,31 @@ This project contains utilities for fetching and processing crypto data and a si
 
 ## Python Training
 
-The `python_train` directory uses [Poetry](https://python-poetry.org/) to manage dependencies.
+The `python_train` directory uses [Conda](https://docs.conda.io/) to manage dependencies.
 It trains a linear regression model to predict the Bitcoin closing price using the
 preprocessed data in `data/processed/fear_and_greed_history_5min.parquet`.
 The model weights are saved to `./models/model_v1.csv`.
 
-### Run Training
+### Setup Environment
 
 ```bash
 cd python_train
-poetry install
-poetry run python src/train.py
+conda env create -f environment.yml
+conda activate btc_predictor
 ```
 
-## Model Training
+### Run Training
 
-A Python project using Poetry to train a linear model on the Parquet data.
+```bash
+python src/train.py
+```
 
-Steps:
-1. Change into the model directory and install dependencies:
+### Run Python Tests
 
-   ```bash
-   cd python_train
-   poetry install
-   ```
-2. Train the model and save weights:
+```bash
+pytest
+```
 
-   ```bash
-   poetry run python src/train.py
-   ```
-   The model weights will be saved to the root-level `models/model_v1.csv` file.
+### Run the Notebook
 
-3. Run Python tests:
-
-   ```bash
-   poetry run pytest
-   ```
+You can open `analysis.ipynb` in VS Code or Jupyter after activating the environment.
