@@ -1,34 +1,31 @@
-# GHA ML Pipeline: Fetching data with Rust.
+## Rust Data Pipeline Binaries
 
-This Rust App fetches 5-minute interval fear & greed history for the past 24 hours from the CoinYBubble API and appends unique entries to `data/raw/fear_and_greed_history_5min.jsonl`.
+- **fetch_data**: Fetches 5-min interval BTC data from CoinYBubble and appends unique records to `data/raw/fear_and_greed_history_5min.jsonl`.
+- **validate_jsonl**: Validates that a JSONL file has no duplicate `interval_end_time` values.
+- **convert_jsonl_parquet**: Converts a JSONL file to partitioned Parquet files by date.
 
-## Prerequisites
+### Usage
 
-- Rust toolchain (edition 2021)
-- Internet connectivity for API calls
+From the rust_fetch:
 
-## Usage
+```sh
+# Fetch and append new data
+task: cargo run --release --bin fetch_data
 
-Run the fetcher with:
+# Validate a JSONL file for duplicates
+task: cargo run --release --bin validate_jsonl -- data/raw/fear_and_greed_history_5min.jsonl
 
-```bash
-cargo run --bin gha_ml_pipeline
+# Convert JSONL to Parquet
+task: cargo run --release --bin convert_jsonl_parquet -- ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
 ```
 
-Each run will:
-1. Query `https://api.coinybubble.com/v1/history/5min?hours=24` for the last 24 h of data.
-2. Serialize each entry into a compact JSON string.
-3. Append only new timestamps to `data/raw/fear_and_greed_history_5min.jsonl`.
+## GitHub Actions Workflow
 
-## Parquet Conversion
+The workflow `.github/workflows/fetch_data.yml` will:
+1. Build the Rust project
+2. Run the fetch step (`fetch_data`)
+3. Validate the data (`validate_jsonl`)
+4. Convert to Parquet (`convert_jsonl_parquet`)
+5. Commit and push changes
 
-Convert your raw JSONL log to a columnar Parquet file:
-
-```bash
-# from the `rust_fetch` folder
-cargo run --release --bin convert_jsonl_parquet -- \
-  ../data/raw/fear_and_greed_history_5min.jsonl \
-  ../data/processed/fear_and_greed_history_5min.parquet
-```
-
-In the scheduled GitHub Action this step runs automatically after each fetch.
+---
