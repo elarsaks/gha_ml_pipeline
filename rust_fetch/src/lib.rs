@@ -1,3 +1,4 @@
+pub mod api_clients;
 use std::collections::HashSet;
 use std::error::Error;
 use std::fs::{create_dir_all, File, OpenOptions};
