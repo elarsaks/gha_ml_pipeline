@@ -12,5 +12,13 @@ polars = { version = "0.32", features = ["parquet", "json"] }
 tempfile = "3.3"
 
 [[bin]]
+name = "fetch_data"
+path = "src/bin/fetch_data.rs"
+
+[[bin]]
 name = "convert_jsonl_parquet"
 path = "src/bin/convert_jsonl_parquet.rs"
+
+[[bin]]
+name = "validate_jsonl"
+path = "src/bin/validate_jsonl.rs"

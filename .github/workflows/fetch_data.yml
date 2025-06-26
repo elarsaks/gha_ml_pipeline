@@ -48,21 +48,13 @@ jobs:
         run: cargo build --release
 
       - name: Run scheduled fetch
-        run: cargo run --release --bin gha_ml_pipeline --verbose
+        run: cargo run --release --bin fetch_data
 
       - name: Ensure processed folder exists
         run: mkdir -p ../data/processed
 
+      - name: Validate JSONL file
+        run: cargo run --release --bin validate_jsonl -- ../data/raw/fear_and_greed_history_5min.jsonl
+
       - name: Convert JSONL → Parquet
         run: cargo run --release --bin convert_jsonl_parquet -- ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
-      - name: Commit updated data
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
-          git commit -m "chore: update fetched data" || echo "No changes to commit"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
