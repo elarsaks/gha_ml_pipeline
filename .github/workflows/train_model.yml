@@ -27,12 +27,12 @@ jobs:
         run: |
           python python_train/src/train.py
 
-      - name: Commit model weights
+      - name: Commit model weights and notebook
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add models/*.csv
-          git commit -m 'Update model weights [skip ci]' || echo "No changes to commit"
+          git add models/*.csv models/*.json python_train/linear_regression_training.ipynb
+          git commit -m 'Update model weights and notebook [skip ci]' || echo "No changes to commit"
           git pull --rebase
           git push
         env:

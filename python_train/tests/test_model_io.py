@@ -2,7 +2,7 @@ import os
 import tempfile
 
 import polars as pl
-from utils.model_io import save_model
+from model_io import save_model
 
 
 def test_save_model_creates_champion():
