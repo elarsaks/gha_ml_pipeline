@@ -1,9 +1,21 @@
 name: Fetch Data
+
+on:
+  workflow_call: {}
+  workflow_dispatch: {}
+
 permissions:
   contents: write
-on:
-  workflow_call: # Called by pipeline.yml
-  workflow_dispatch: # Manual trigger
+
+concurrency:
+  group: fetch-data
+  cancel-in-progress: true
+
+env:
+  RAW_DATA_DIR: ../data/raw
+  PROCESSED_DATA_DIR: ../data/processed
+  FEAR_GREED_FILE: fear_and_greed_history_5min.jsonl
+  PARQUET_FILE: fear_and_greed_history_5min.parquet
 
 jobs:
   fetch:
@@ -11,6 +23,7 @@ jobs:
     defaults:
       run:
         working-directory: rust_fetch
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -18,53 +31,46 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
 
-      - name: Prepare cargo cache dirs
-        run: mkdir -p ~/.cargo/registry ~/.cargo/git
-
-      - name: Set up Rust
+      - name: Set up Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
-      - name: Cache cargo registry
+      - name: Cache Cargo registry & git index
         uses: actions/cache@v3
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('rust_fetch/Cargo.lock') }}
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-${{ hashFiles('rust_fetch/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
 
-      - name: Cache cargo index
-        uses: actions/cache@v3
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-git-${{ hashFiles('rust_fetch/Cargo.lock') }}
-
-      - name: Prepare data directories
+      - name: Prepare data dirs & seed raw file
         run: |
-          mkdir -p ../data/raw ../data/processed
-          touch ../data/raw/fear_and_greed_history_5min.jsonl
+          mkdir -p "$RAW_DATA_DIR" "$PROCESSED_DATA_DIR"
+          touch "$RAW_DATA_DIR/$FEAR_GREED_FILE"
 
-      - name: Build project
+      - name: Build (release)
         run: cargo build --release
 
-      - name: Run scheduled fetch
+      - name: Fetch data
         run: cargo run --release --bin fetch_data
 
-      - name: Ensure processed folder exists
-        run: mkdir -p ../data/processed
-
-      - name: Validate JSONL file
-        run: cargo run --release --bin validate_jsonl -- ../data/raw/fear_and_greed_history_5min.jsonl
+      - name: Validate JSONL
+        run: cargo run --release --bin validate_jsonl -- "$RAW_DATA_DIR/$FEAR_GREED_FILE"
 
       - name: Convert JSONL → Parquet
-        run: cargo run --release --bin convert_jsonl_parquet -- ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
+        run: cargo run --release --bin convert_jsonl_parquet -- \
+          "$RAW_DATA_DIR/$FEAR_GREED_FILE" \
+          "$PROCESSED_DATA_DIR/$PARQUET_FILE"
 
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
-          git commit -m "chore: update fetched data" || echo "No changes to commit"
+          git add "$RAW_DATA_DIR/$FEAR_GREED_FILE" "$PROCESSED_DATA_DIR/$PARQUET_FILE"
+          git commit -m "chore(fetch): update fear and greed data" || echo "No changes to commit"
 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0

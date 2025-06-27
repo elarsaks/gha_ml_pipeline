@@ -10,13 +10,13 @@ From the rust_fetch:
 
 ```sh
 # Fetch and append new data
-task: cargo run --release --bin fetch_data
+cargo run --release --bin fetch_data
 
 # Validate a JSONL file for duplicates
-task: cargo run --release --bin validate_jsonl -- data/raw/fear_and_greed_history_5min.jsonl
+cargo run --release --bin validate_jsonl -- data/raw/fear_and_greed_history_5min.jsonl
 
 # Convert JSONL to Parquet
-task: cargo run --release --bin convert_jsonl_parquet -- ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
+cargo run --release --bin convert_jsonl_parquet -- ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
 ```
 
 ## GitHub Actions Workflow
