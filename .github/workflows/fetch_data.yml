@@ -76,3 +76,13 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log workflow run data
+        run: |
+          mkdir -p ../ci_data
+          echo "${{ github.workflow }},${{ github.run_id }},${{ github.job }},${{ job.status }},${{ github.sha }},${{ github.actor }},${{ github.event_name }},${{ github.run_number }},$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> ../ci_data/fetch_data_metrics.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ../ci_data/fetch_data_metrics.csv
+          git commit -m "chore(ci): log fetch_data workflow run data" || echo "No changes to commit"
+          git push
