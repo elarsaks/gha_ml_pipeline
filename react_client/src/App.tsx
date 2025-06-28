@@ -11,7 +11,7 @@ const headerStyle: React.CSSProperties = {
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",
   textShadow:
-    "0 2px 3px #bfa100, 0 1px 0 #fff8dc, 0 4px 16px #bfa100, 0 0px 2px #fff8dc",
+    "0 1px 2px #bfa100, 0 1px 0 #fff8dc, 0 2px 8px #bfa100, 0 0px 1px #fff8dc",
   fontFamily: 'Montserrat, "Segoe UI", Arial, sans-serif',
 };
 
