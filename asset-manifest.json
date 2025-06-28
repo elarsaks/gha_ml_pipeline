@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/gha_ml_pipeline/static/css/main.f855e6bc.css",
-    "main.js": "/gha_ml_pipeline/static/js/main.36346c6a.js",
+    "main.css": "/gha_ml_pipeline/static/css/main.6a8146f1.css",
+    "main.js": "/gha_ml_pipeline/static/js/main.ccf5a0c7.js",
     "static/js/453.93414859.chunk.js": "/gha_ml_pipeline/static/js/453.93414859.chunk.js",
-    "static/media/logo.svg": "/gha_ml_pipeline/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/gha_ml_pipeline/index.html",
-    "main.f855e6bc.css.map": "/gha_ml_pipeline/static/css/main.f855e6bc.css.map",
-    "main.36346c6a.js.map": "/gha_ml_pipeline/static/js/main.36346c6a.js.map",
+    "main.6a8146f1.css.map": "/gha_ml_pipeline/static/css/main.6a8146f1.css.map",
+    "main.ccf5a0c7.js.map": "/gha_ml_pipeline/static/js/main.ccf5a0c7.js.map",
     "453.93414859.chunk.js.map": "/gha_ml_pipeline/static/js/453.93414859.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f855e6bc.css",
-    "static/js/main.36346c6a.js"
+    "static/css/main.6a8146f1.css",
+    "static/js/main.ccf5a0c7.js"
   ]
 }
