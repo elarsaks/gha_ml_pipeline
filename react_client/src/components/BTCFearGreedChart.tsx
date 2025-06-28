@@ -10,16 +10,22 @@ const chartContainerStyle: React.CSSProperties = {
   boxShadow: "0 2px 16px rgba(0,0,0,0.12)",
   position: "relative",
   overflow: "visible",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
 };
 const legendStyle: React.CSSProperties = {
   display: "flex",
   gap: 24,
   marginTop: 16,
+  justifyContent: "center",
 };
 const legendItemStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: 8,
+  color: "#fff",
+  fontWeight: 500,
 };
 const legendColorStyle: React.CSSProperties = {
   display: "inline-block",
