@@ -2,7 +2,7 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches:
-      - deploy_react_app
+      - deploy_react_client
 
 jobs:
   deploy-react-client:
