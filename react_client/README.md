@@ -33,7 +33,10 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Deployment
 - The app is automatically deployed to GitHub Pages from the `gh-pages` branch via GitHub Actions.
-- The production site is available at: [https://elarsaks.github.io/gha_ml_pipeline/](https://elarsaks.github.io/gha_ml_pipeline/)
+- The production site is always available at: [https://elarsaks.github.io/gha_ml_pipeline/](https://elarsaks.github.io/gha_ml_pipeline/)
+
+## Live Demo
+You can view the latest deployed version here: [https://elarsaks.github.io/gha_ml_pipeline/](https://elarsaks.github.io/gha_ml_pipeline/)
 
 ## Integration
 - The client fetches and visualizes data and model outputs from the main pipeline (see `/data/` and `/models/` in the repo root).
