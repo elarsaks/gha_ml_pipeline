@@ -69,8 +69,8 @@ pub fn append_unique_records(path: &str, records: &[Value]) -> Result<(), Box<dy
 
 /// Fetches 5-min history and appends unique records to the JSONL file.
 pub fn run() -> Result<(), Box<dyn Error>> {
-    // Fetch 5-min history for past 24 hours (includes fear & greed)
-    let history = fetch_history_5min(24)?;
+    // Fetch 5-min history for past 7 days (168 hours)
+    let history = fetch_history_5min(24 * 7)?;
 
     // Build the data path relative to the crate directory.
     let hist_path =
