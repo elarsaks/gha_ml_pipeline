@@ -5,10 +5,6 @@ on:
     branches:
       - deploy_react_client
 
-concurrency:
-  group: deploy-react-client
-  cancel-in-progress: true
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -24,8 +20,10 @@ jobs:
         with:
           node-version: "18.x"
           cache: "npm"
+          cache-dependency-path: react_client/package-lock.json
 
       - name: Install dependencies & build
+        working-directory: react_client
         run: |
           npm ci
           npm run build
@@ -34,4 +32,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build
+          publish_dir: react_client/build
