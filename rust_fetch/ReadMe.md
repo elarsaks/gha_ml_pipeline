@@ -1,31 +1,28 @@
-## Rust Data Pipeline Binaries
+# Rust Data Fetch Tools
 
-- **fetch_data**: Fetches 5-min interval BTC data from CoinYBubble and appends unique records to `data/raw/fear_and_greed_history_5min.jsonl`.
-- **validate_jsonl**: Validates that a JSONL file has no duplicate `interval_end_time` values.
-- **convert_jsonl_parquet**: Converts a JSONL file to partitioned Parquet files by date.
+This folder contains small Rust binaries used to collect and prepare the crypto data for the pipeline. The tools are executed both locally and inside GitHub Actions.
 
-### Usage
+## Prerequisites
+- [Rust toolchain](https://www.rust-lang.org/tools/install)
 
-From the rust_fetch:
-
-```sh
-# Fetch and append new data
-cargo run --release --bin fetch_data
-
-# Validate a JSONL file for duplicates
-cargo run --release --bin validate_jsonl -- data/raw/fear_and_greed_history_5min.jsonl
-
-# Convert JSONL to Parquet
-cargo run --release --bin convert_jsonl_parquet -- ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
+## Building
+```bash
+cd rust_fetch
+cargo build --release
 ```
 
-## GitHub Actions Workflow
+## Usage
+```bash
+# Fetch and append the latest 5‑minute data
+cargo run --release --bin fetch_data
 
-The workflow `.github/workflows/fetch_data.yml` will:
-1. Build the Rust project
-2. Run the fetch step (`fetch_data`)
-3. Validate the data (`validate_jsonl`)
-4. Convert to Parquet (`convert_jsonl_parquet`)
-5. Commit and push changes
+# Validate a JSONL file to ensure there are no duplicate intervals
+cargo run --release --bin validate_jsonl -- data/raw/fear_and_greed_history_5min.jsonl
 
----
+# Convert a JSONL file into a partitioned Parquet dataset
+cargo run --release --bin convert_jsonl_parquet -- ../data/raw/fear_and_greed_history_5min.jsonl ../data/processed/fear_and_greed_history_5min.parquet
+```
+The resulting files are stored under `../data/` and are committed back to the repository by the CI workflow.
+
+## GitHub Actions
+The workflow `.github/workflows/fetch_data.yml` builds these binaries, runs `fetch_data` on a schedule, validates the result and commits any new data.
