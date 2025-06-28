@@ -9,10 +9,11 @@ This repository is a hobby project that implements a complete machine learning p
 The pipeline covers data collection, model training, analysis and visualisation. It uses a mix of Rust, Python and TypeScript with CI/CD provided by GitHub Actions.
 
 ## Main components
+- **CI/CD**: GitHub Actions orchestrate fetching, training and deployment.
 - **Rust backend** (`rust_fetch/`): binaries for fetching historical data and converting it to Parquet files.
 - **Python ML pipeline** (`python_train/`): Conda‑based environment for training and evaluating models.
-- **React front‑end** (`react_client/`): simple UI to visualize the final prediction.
-- **CI/CD**: GitHub Actions orchestrate fetching, training and deployment.
+- **React front‑end** (`react_client/`): simple UI to visualize the final prediction. The latest version is always deployed at [elarsaks.github.io/gha_ml_pipeline](https://elarsaks.github.io/gha_ml_pipeline/).
+
 
 ## Project structure
 ```
