@@ -1,38 +1,35 @@
 name: Deploy React App to GitHub Pages
+
 on:
   push:
     branches:
-      - deploy_react_app
+      - deploy_react_client
 
 jobs:
-  deploy-react-client:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+      - name: Setup Node.js & cache dependencies
+        uses: actions/setup-node@v4
         with:
-          node-version: "18.16.1"
+          node-version: "18.x"
+          cache: "npm"
+          cache-dependency-path: react_client/package-lock.json
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Install dependencies & build
+        working-directory: react_client
+        run: |
+          npm ci
+          npm run build
 
-      - name: Install dependencies
-        run: npm i
-
-      - name: Build
-        run: npm run build
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: react_client/build
