@@ -61,9 +61,7 @@ jobs:
         run: cargo run --release --bin validate_jsonl -- "$RAW_DATA_DIR/$FEAR_GREED_FILE"
 
       - name: Convert JSONL → Parquet
-        run: cargo run --release --bin convert_jsonl_parquet -- \
-          "$RAW_DATA_DIR/$FEAR_GREED_FILE" \
-          "$PROCESSED_DATA_DIR/$PARQUET_FILE"
+        run: cargo run --release --bin convert_jsonl_parquet -- "$RAW_DATA_DIR/$FEAR_GREED_FILE" "$PROCESSED_DATA_DIR/$PARQUET_FILE"
 
       - name: Commit updated data
         run: |
