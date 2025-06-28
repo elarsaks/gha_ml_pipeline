@@ -1,57 +1,32 @@
-# gha-ml-pipeline
+# Python Training Pipeline
 
-This project contains utilities for fetching and processing crypto data and a simple Python training project.
+This folder contains the machine learning code for training a simple model to predict the Bitcoin Fear & Greed Index. It relies on a Conda environment and is designed to run automatically in GitHub Actions.
 
-## Python Training
+## Prerequisites
+- [Conda](https://docs.conda.io/en/latest/miniconda.html) installed
+- Python 3.10 or later
 
-The `python_train` directory uses [Conda](https://docs.conda.io/) to manage dependencies.
-It trains a linear regression model to predict the Fear & Greed Index using the
-preprocessed data in `../data/processed/fear_and_greed_history_5min.parquet`.
-The model weights and metadata are saved to the `../models/` directory as CSV and JSON files.
-
-### Setup Environment
-
+## Setup
 ```bash
 cd python_train
-conda env create -f environment.yml  # Only needed once
+conda env create -f environment.yml  # only needed once
 conda activate btc_predictor
 ```
 
-### Run Training (from notebook)
-
-The main workflow is in the notebook. Open and run:
-
+## Development and Training
+The workflow is contained in `linear_regression_training.ipynb`. Open the notebook and run all cells to train the model:
 ```bash
 jupyter notebook linear_regression_training.ipynb
-# or in VS Code, open the notebook and run all cells
 ```
+The notebook reads the processed dataset from `../data/processed/fear_and_greed_history_5min.parquet` and saves the trained weights to `../models/`.
 
-### Run Python Tests
-
+## Running Tests
 ```bash
 pytest
 ```
 
-### Model Artifacts
+## Extending
+- Modify the notebook or add Python modules under `src/` for additional models or data processing.
+- Adjust the Conda dependencies in `environment.yml` as needed.
 
-- Model weights: `../models/champion_model.csv` (and backups/challengers)
-- Model metadata: `../models/model_metadata.json`
-- The notebook and model files are auto-committed by the CI/CD pipeline after each run.
-
-### Inference
-
-To use the trained model for inference, read the weights from `../models/champion_model.csv` and apply the linear regression formula:
-
-```
-prediction = intercept + btc_price_weight * btc_price
-```
-
-### Data
-
-- Input: `../data/processed/fear_and_greed_history_5min.parquet`
-- Output: Model weights and metadata in `../models/`
-
-### CI/CD
-
-- The pipeline fetches new data, retrains the model, and commits updated models and notebook automatically.
-- See `.github/workflows/` for details.
+All trained model files are committed back to the repository via GitHub Actions so that the history of models is preserved.
