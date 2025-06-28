@@ -1,6 +1,49 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import "./BTCFearGreedChart.css";
+
+const chartContainerStyle: React.CSSProperties = {
+  background: "#181c24",
+  borderRadius: 12,
+  padding: 24,
+  margin: "32px auto",
+  maxWidth: 900,
+  boxShadow: "0 2px 16px rgba(0,0,0,0.12)",
+  position: "relative",
+  overflow: "visible",
+};
+const legendStyle: React.CSSProperties = {
+  display: "flex",
+  gap: 24,
+  marginTop: 16,
+};
+const legendItemStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
+};
+const legendColorStyle: React.CSSProperties = {
+  display: "inline-block",
+  width: 18,
+  height: 8,
+  borderRadius: 4,
+};
+const backlightStyle: React.CSSProperties = {
+  position: "absolute",
+  content: '""',
+  top: "5vw",
+  left: 0,
+  right: 0,
+  zIndex: -1,
+  height: "100%",
+  width: "100%",
+  margin: "0 auto",
+  transform: "scale(0.75)",
+  filter: "blur(5vw)",
+  background: "linear-gradient(270deg, #0fffc1, #7e0fff)",
+  backgroundSize: "200% 200%",
+  animation: "animateGlow 10s ease infinite",
+  pointerEvents: "none",
+};
 
 const COIN_BUBBLE_API_URL =
   "https://api.coinybubble.com/v1/history/5min?hours=12";
@@ -14,6 +57,15 @@ interface DataPoint {
 const WIDTH = 800;
 const HEIGHT = 400;
 const MARGIN = { top: 20, right: 60, bottom: 40, left: 60 };
+
+const styleSheet = document.createElement("style");
+styleSheet.innerHTML = `
+@keyframes animateGlow {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}`;
+document.head.appendChild(styleSheet);
 
 const BTCFearGreedChart: React.FC = () => {
   const [data, setData] = useState<DataPoint[]>([]);
@@ -118,19 +170,20 @@ const BTCFearGreedChart: React.FC = () => {
   }, [data]);
 
   if (loading) {
-    return <div className="chart-container">Loading chart...</div>;
+    return <div style={chartContainerStyle}>Loading chart...</div>;
   }
 
   return (
-    <div className="chart-container">
+    <div style={chartContainerStyle}>
+      <div style={backlightStyle}></div>
       <svg ref={svgRef} width={WIDTH} height={HEIGHT}></svg>
-      <div className="legend">
-        <div className="legend-item">
-          <span className="legend-color fg"></span>
+      <div style={legendStyle}>
+        <div style={legendItemStyle}>
+          <span style={{ ...legendColorStyle, background: "#FFC107" }}></span>
           <span>Fear & Greed Index</span>
         </div>
-        <div className="legend-item">
-          <span className="legend-color btc"></span>
+        <div style={legendItemStyle}>
+          <span style={{ ...legendColorStyle, background: "#2196F3" }}></span>
           <span>Bitcoin Price (USD)</span>
         </div>
       </div>
