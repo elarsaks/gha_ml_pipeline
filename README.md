@@ -29,3 +29,4 @@ For setup and usage instructions, see the README in each subdirectory:
 - [rust_fetch/README.md](rust_fetch/README.md)
 - [python_train/README.md](python_train/README.md)
 - [react_client/README.md](react_client/README.md)
+- [.github/workflows/README.md](.github/workflows/README.md)
