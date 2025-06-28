@@ -1,0 +1,31 @@
+.chart-container {
+  background: #181c24;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 32px auto;
+  max-width: 900px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+}
+
+.legend {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.legend-color {
+  display: inline-block;
+  width: 18px;
+  height: 8px;
+  border-radius: 4px;
+}
+.legend-color.fg {
+  background: #FFC107;
+}
+.legend-color.btc {
+  background: #2196F3;
+}
