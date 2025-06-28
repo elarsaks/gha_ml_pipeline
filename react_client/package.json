@@ -1,5 +1,6 @@
 {
   "name": "react_client",
+  "homepage": "https://elarsaks.github.io/gha_ml_pipeline/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
