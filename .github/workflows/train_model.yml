@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # Manual trigger
 
 jobs:
-  train-and-commit:
+  train:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -25,7 +25,7 @@ jobs:
       - name: Train model
         shell: bash -l {0}
         run: |
-          python python_train/src/train.py
+          jupyter nbconvert --to notebook --execute python_train/linear_regression_training.ipynb --output linear_regression_training.ipynb --output-dir python_train
 
       - name: Commit model weights and notebook
         run: |
