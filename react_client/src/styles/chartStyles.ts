@@ -3,9 +3,10 @@ import React from "react";
 export const chartContainerStyle: React.CSSProperties = {
   background: "#181c24",
   borderRadius: 12,
-  padding: 24,
-  margin: "32px auto",
-  maxWidth: 900,
+  padding: "clamp(12px, 3vw, 24px)",
+  margin: "clamp(16px, 4vw, 32px) auto",
+  width: "min(900px, 95vw)",
+  maxWidth: "95vw",
   boxShadow: "0 2px 16px rgba(0,0,0,0.12)",
   position: "relative",
   overflow: "visible",
@@ -16,9 +17,10 @@ export const chartContainerStyle: React.CSSProperties = {
 
 export const legendStyle: React.CSSProperties = {
   display: "flex",
-  gap: 24,
+  gap: "clamp(12px, 3vw, 24px)",
   marginTop: 16,
   justifyContent: "center",
+  flexWrap: "wrap",
 };
 
 export const legendItemStyle: React.CSSProperties = {
@@ -27,6 +29,7 @@ export const legendItemStyle: React.CSSProperties = {
   gap: 8,
   color: "#fff",
   fontWeight: 500,
+  fontSize: "clamp(12px, 2.5vw, 14px)",
 };
 
 export const legendColorStyle: React.CSSProperties = {
@@ -66,16 +69,18 @@ export const loadingSpinnerStyle: React.CSSProperties = {
 
 export const tooltipStyle: React.CSSProperties = {
   position: "absolute",
-  padding: "8px 12px",
-  background: "rgba(0,0,0,0.8)",
+  padding: "clamp(6px, 2vw, 12px)",
+  background: "rgba(0,0,0,0.9)",
   color: "#fff",
   borderRadius: "4px",
-  fontSize: "12px",
+  fontSize: "clamp(10px, 2.5vw, 12px)",
   pointerEvents: "none",
   zIndex: 10,
   display: "none",
   boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
   transition: "transform 0.1s ease-out",
+  maxWidth: "200px",
+  wordWrap: "break-word",
 };
 
 export const buttonStyle: React.CSSProperties = {

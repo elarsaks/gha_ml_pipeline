@@ -7,4 +7,8 @@ export const CHART_DIMENSIONS = {
   WIDTH: 800,
   HEIGHT: 400,
   MARGIN: { top: 20, right: 60, bottom: 40, left: 60 },
+  MOBILE_BREAKPOINT: 768,
+  MOBILE_WIDTH: 350,
+  MOBILE_HEIGHT: 250,
+  MOBILE_MARGIN: { top: 15, right: 30, bottom: 30, left: 40 },
 } as const;
