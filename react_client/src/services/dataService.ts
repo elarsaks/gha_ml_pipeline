@@ -21,23 +21,22 @@ export const fetchModelWeights = async (): Promise<ModelWeights> => {
   }
   const csv = await response.text();
   const lines = csv.split("\n").filter((l) => l.trim());
-
   if (lines.length < 2) {
-    throw new Error("Invalid model weights");
+    throw new Error("Invalid model weights CSV");
   }
 
+  // Initialize
   const weights: ModelWeights = { intercept: 0, coefficient: 0 };
 
+  // Skip header, then assign intercept vs. coefficient
   for (let i = 1; i < lines.length; i++) {
-    const [feature, w] = lines[i].split(",");
-    const val = parseFloat(w);
-    if (feature === "intercept") {
-      weights.intercept = val;
-    } else if (
-      feature === "avg_actual_value" ||
-      feature === "fear_greed_index"
-    ) {
-      weights.coefficient = val;
+    const [feature, rawWeight] = lines[i].split(",").map((s) => s.trim());
+    const w = parseFloat(rawWeight);
+    if (feature.toLowerCase() === "intercept") {
+      weights.intercept = w;
+    } else {
+      // Any non-intercept feature row becomes our coefficient
+      weights.coefficient = w;
     }
   }
 
@@ -55,7 +54,7 @@ export const processData = (
       weights.intercept + weights.coefficient * pt.avg_actual_value,
   }));
 
-  // Sort by interval_end_time
+  // Sort by timestamp so your chart line is monotonic
   const parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
   withPredictions.sort(
     (a, b) =>
