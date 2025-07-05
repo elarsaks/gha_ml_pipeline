@@ -1,5 +1,5 @@
 import React from "react";
-import BTCFearGreedChart from "./components/BTCFearGreedChart";
+import BTCPriceChart from "./components/BTCPriceChart";
 
 const headerStyle: React.CSSProperties = {
   textAlign: "center",
@@ -31,7 +31,7 @@ const App: React.FC = () => {
     <div style={appContainerStyle}>
       <h1 style={headerStyle}> ₿/$ BTC Price Prediction </h1>
       <div style={{ width: "100%", maxWidth: 900, minWidth: 0 }}>
-        <BTCFearGreedChart />
+        <BTCPriceChart />
       </div>
     </div>
   );
