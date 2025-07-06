@@ -32,7 +32,7 @@ const descriptionStyle: React.CSSProperties = {
   textAlign: "center",
   fontSize: "clamp(0.9rem, 2.5vw, 1.1rem)",
   color: "#a0a0a0",
-  margin: "clamp(8px, 2vw, 16px) 0 clamp(16px, 4vw, 24px) 0",
+  margin: "clamp(8px, 2vw, 16px) 0 clamp(8px, 2vw, 12px) 0",
   maxWidth: "600px",
   lineHeight: 1.5,
 };
@@ -48,6 +48,11 @@ const linkHoverStyle: React.CSSProperties = {
   borderBottomColor: "#FFD700",
 };
 
+const topDescriptionStyle: React.CSSProperties = {
+  ...descriptionStyle,
+  margin: "clamp(8px, 2vw, 16px) 0 clamp(4px, 1vw, 8px) 0",
+};
+
 const App: React.FC = () => {
   useEffect(() => {
     injectKeyframes();
@@ -57,9 +62,13 @@ const App: React.FC = () => {
     <div style={appContainerStyle}>
       <SEO />
       <h1 style={headerStyle}> ₿/$ BTC Price Prediction </h1>
-      <p style={descriptionStyle}>
+      <p style={topDescriptionStyle}>
         End-to-end machine learning pipeline powered by GitHub Actions.
-        <br />
+      </p>
+      <div style={{ width: "100%", maxWidth: 900, minWidth: 0 }}>
+        <BTCPriceChart />
+      </div>
+      <p style={descriptionStyle}>
         View the{" "}
         <a
           href="https://github.com/elarsaks/gha_ml_pipeline"
@@ -77,9 +86,6 @@ const App: React.FC = () => {
         </a>
         .
       </p>
-      <div style={{ width: "100%", maxWidth: 900, minWidth: 0 }}>
-        <BTCPriceChart />
-      </div>
     </div>
   );
 };
