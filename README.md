@@ -30,3 +30,13 @@ For setup and usage instructions, see the README in each subdirectory:
 - [python_train/README.md](python_train/README.md)
 - [react_client/README.md](react_client/README.md)
 - [.github/workflows/README.md](.github/workflows/README.md)
+
+## ML Lifecycle Evaluation
+This project has been evaluated against standard ML lifecycle stages:
+- [ML Lifecycle Summary](ML_LIFECYCLE_SUMMARY.md) - Quick assessment overview
+- [ML Lifecycle Evaluation](ML_LIFECYCLE_EVALUATION.md) - Detailed evaluation report  
+- [ML Improvement Tracking](ML_IMPROVEMENT_TRACKING.md) - Action items and progress
+
+**Current Status**: 4/6 stages passing ✅ | Maturity Level: Systematic (Stage 3/4)
+
+Run the health check: `python scripts/ml_health_check.py`
