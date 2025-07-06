@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/gha_ml_pipeline/static/css/main.6a8146f1.css",
-    "main.js": "/gha_ml_pipeline/static/js/main.d63b68f2.js",
+    "main.js": "/gha_ml_pipeline/static/js/main.26a96de6.js",
     "static/js/453.93414859.chunk.js": "/gha_ml_pipeline/static/js/453.93414859.chunk.js",
     "index.html": "/gha_ml_pipeline/index.html",
     "main.6a8146f1.css.map": "/gha_ml_pipeline/static/css/main.6a8146f1.css.map",
-    "main.d63b68f2.js.map": "/gha_ml_pipeline/static/js/main.d63b68f2.js.map",
+    "main.26a96de6.js.map": "/gha_ml_pipeline/static/js/main.26a96de6.js.map",
     "453.93414859.chunk.js.map": "/gha_ml_pipeline/static/js/453.93414859.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6a8146f1.css",
-    "static/js/main.d63b68f2.js"
+    "static/js/main.26a96de6.js"
   ]
 }
