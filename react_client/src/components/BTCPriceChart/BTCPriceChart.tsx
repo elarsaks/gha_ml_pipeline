@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useChartData } from "../../hooks/useChartData";
-import { injectKeyframes } from "../../utils/styles";
 import { chartContainerStyle, backlightStyle } from "../../styles/chartStyles";
 import { LoadingState } from "../LoadingState";
 import { ErrorState } from "../ErrorState";
@@ -10,10 +9,6 @@ import { ModelInfo } from "../ModelInfo";
 
 const BTCPriceChart: React.FC = () => {
   const { data, modelWeights, loading, error } = useChartData();
-
-  useEffect(() => {
-    injectKeyframes();
-  }, []);
 
   const handleRetry = () => {
     window.location.reload();
