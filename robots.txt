@@ -1,3 +1,19 @@
+# Robots.txt for Bitcoin ML Pipeline
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /static/
+
+# Sitemap location
+Sitemap: https://elarsaks.github.io/gha_ml_pipeline/sitemap.xml
+
+# Popular search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
