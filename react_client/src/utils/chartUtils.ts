@@ -1,15 +1,26 @@
 import * as d3 from "d3";
 import { DataPoint } from "../types";
-import { CHART_DIMENSIONS } from "../constants";
 
-const { WIDTH, HEIGHT, MARGIN } = CHART_DIMENSIONS;
+interface ChartDimensions {
+  width: number;
+  height: number;
+  margin: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  };
+}
 
 export const createChart = (
   svg: d3.Selection<SVGSVGElement, unknown, null, undefined>,
   tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>,
-  data: DataPoint[]
+  data: DataPoint[],
+  dimensions: ChartDimensions
 ): void => {
   svg.selectAll("*").remove();
+
+  const { width: WIDTH, height: HEIGHT, margin: MARGIN } = dimensions;
 
   const parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
   const fmtDate = d3.timeFormat("%b %d, %H:%M UTC");
